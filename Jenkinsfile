@@ -1,5 +1,8 @@
 node('mavenlarge-gol') {
-    
+    stage('rmdir'){ 
+    sh label: '', script: '''rm -fv *.*
+rm -rf *'''
+}
     stage('SCM') { 
     sh label: '', script: 'https://github.com/shopizer-ecommerce/shopizer.git'
 }
