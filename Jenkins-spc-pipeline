@@ -1,0 +1,18 @@
+node('mavenlarge-gol') {
+    stage('rmdir'){ 
+    sh label: '', script: 'if [ -e openmrs-core ];then rm -rf openmrs-core ; fi '
+}
+    stage('SCM') { 
+    sh label: '', script: 'git clone https://github.com/spring-projects/spring-petclinic.git'
+}
+   stage('spc-build') {
+    sh label: '', script: '''cd spring-petclinic
+mvn package'''
+}
+stage('archive') {
+    archive 'target/spring-petclinic-2.3.0.BUILD-SNAPSHOT.jar'
+}
+stage('junit') {
+    junit 'spring-petclinic/target/surefire-reports/*.xml'
+}
+}
